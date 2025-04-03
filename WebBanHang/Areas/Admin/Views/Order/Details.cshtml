@@ -1,0 +1,126 @@
+﻿@model WebBanHang.ViewModel.OrderDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Chi tiết đơn hàng</h1>
+
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Id</label>
+                        <p class="form-control">@Model.Order.Id</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>User name</label>
+                        <p class="form-control">@Model.Order.Name</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Phone number</label>
+                        <p class="form-control">@Model.Order.PhoneNumber</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Price</label>
+                        <p class="form-control">@Model.Order.TotalPrice.ToString("c")</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Order date</label>
+                        <p class="form-control">@Model.Order.OrderDate.ToString("dd/MM/yyyy")</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Shipping Address</label>
+                        <p class="form-control">@Model.Order.ShippingAddress</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Note</label>
+                        <p class="form-control">@Model.Order.Notes</p>
+                    </div>
+                </div>
+            </div>
+                        <h2>Chỉnh sửa trạng thái</h2>
+            <form asp-action="EditStatus" asp-controller="Order" method="post">
+                <input type="hidden" name="orderId" value="@Model.Order.Id" />
+                <div class="form-group">
+                    <label for="status">Trạng thái</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="Pending" selected="@((Model.Order.Status == "Pending") ? "selected" : null)">Pending</option>
+                        <option value="Processing" selected="@((Model.Order.Status == "Processing") ? "selected" : null)">Processing</option>
+                        <option value="Shipped" selected="@((Model.Order.Status == "Shipped") ? "selected" : null)">Shipped</option>
+                        <option value="Delivered" selected="@((Model.Order.Status == "Delivered") ? "selected" : null)">Delivered</option>
+                        <option value="Cancelled" selected="@((Model.Order.Status == "Cancelled") ? "selected" : null)">Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </form>
+            <h2>Chi tiết sản phẩm</h2>
+            @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Product Name
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Total Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Product.Name
+                                </td>
+                                <td>
+                                    @item.Quantity
+                                </td>
+                                <td>
+                                    @item.Price
+                                </td>
+                                <td>
+                                    @(item.Quantity * item.Price)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No order items available.</p>
+            }
+
+            <div>
+                <a class="btn btn-primary href="@Url.Action("Index")">Back to List</a>
+            </div>
+        </div>
+    </div>
+</section>

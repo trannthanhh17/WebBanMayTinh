@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WishlistItem>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table class="table">
+	<div class="row pd-3">
+		@foreach (var item in Model)
+		{
+			<box class="box-shadow btn-outline-light center rounded" style="width: 16.5rem; padding: 15px; margin: 10px; box-shadow:5px 5px 5px #eee">
+				<a class="col-lg-3 col-md-6" asp-controller="Product" asp-action="Display" asp-route-id="@item.Product.Id">
+
+					<div class="block2-pic hov-img0">
+						<img src="@item.Product.ImageUrl" />
+						<a asp-controller="Product" asp-action="Display" asp-route-id="@item.Product.Id" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04" style="box-shadow:3px 3px 3px #aaa">
+							Quick View
+						</a>
+					</div>
+					<div class="block2-txt flex-w flex-t p-t-14">
+						<div class="block2-txt-child1 flex-col-l ">
+							<a asp-controller="Product" asp-action="Display" asp-route-id="@item.Id" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">@item.Product.Name</a>
+							<span class="stext-105 cl3">@item.Product.Price.ToString("c")</span>
+						</div>
+						<div class="block2-txt-child2 flex-r p-t-3">
+							<form asp-action="removefromwishlist" asp-controller="wishlist" method="post">
+								<input type="hidden" name="id" value="@item.Id" />
+								<button type="submit">
+									@* <img class="icon-heart1 dis-block trans-04" src="/images/images/icons/icon-heart-01.png" alt="ICON"> *@
+									<img class="icon-heart2 dis-block trans-04" src="/images/images/icons/icon-heart-02.png" alt="ICON">
+								</button>
+							</form>
+						</div>
+					</div>
+				</a>
+			</box>
+		}
+	</div>
+</table>

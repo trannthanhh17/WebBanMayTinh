@@ -1,0 +1,275 @@
+﻿@using System.Collections;
+@using WebBanHang.Models;
+@model IEnumerable<WebBanHang.Models.Product>
+@{
+    ViewData["Title"] = "Index";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.Currentpage;
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+
+</head>
+
+<body class="animsition">
+	<section class="section-slide">
+		<div class="wrap-slick1">
+			<div class="slick1">
+				<div class="item-slick1" style="background-image: url(/images/banner_1.webp); height: 60vh;">
+					<div class="container h-full">
+						<div class="flex-col-c-b h-full p-t-50 p-b-20 respon5">
+							<div class="layer-slick1 animated visible-false" data-appear="slideInUp">
+								<a href="/Product/Display/1" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+									Shop Now
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="item-slick1" style="background-image: url(/images/banner_2.webp); height: 60vh;">
+					<div class="container h-full">
+						<div class="flex-col-c-b h-full p-t-50 p-b-20 respon5">
+							<div class="layer-slick1 animated visible-false" data-appear="slideInUp">
+								<a href="/Product/Display/2" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+									Shop Now
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="item-slick1" style="background-image: url(/images/banner_3.webp); height: 60vh;">
+					<div class="container h-full">
+						<div class="flex-col-c-b h-full p-t-50 p-b-20 respon5">
+							<div class="layer-slick1 animated visible-false" data-appear="slideInUp">
+								<a href="/Product/Display/3" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+									Shop Now
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Banner -->
+	<div class="sec-banner bg0 p-t-40 ">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="/images/bannerbottom1.webp" alt="IMG-BANNER">
+
+						<a href="/Product/Display/1" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="/images/bannerbottom2.webp" alt="IMG-BANNER">
+
+						<a href="/Product/Display/2" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="/images/bannerbottom3.webp" alt="IMG-BANNER">
+
+						<a href="/Product/Display/6" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+							<div class="block1-txt-child2 p-b-4 trans-05">
+								<div class="block1-link stext-101 cl0 trans-09">
+									Shop Now
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <br />
+
+	<section class="bg0 p-t-23 p-b-140">
+		<div class="container">
+			<div class="p-b-10">
+				<h3 class="ltext-103 cl5">
+					Product Overview
+				</h3>
+			</div>
+
+				@await Component.InvokeAsync("Navbar")
+				@await Component.InvokeAsync("NavbarBrand")
+			
+
+			<table class="table">
+				<div class="row pd-3">
+						@foreach (var item in Model)
+						{
+						<box class="box-shadow btn-outline-light center rounded" style="width: 16.5rem; padding: 15px; margin: 10px; box-shadow:5px 5px 5px #eee">
+								<a class="col-lg-3 col-md-6" asp-controller="Product" asp-action="Display" asp-route-id="@item.Id">
+
+									<div class="block2-pic hov-img0">
+										<img src="@item.ImageUrl" />
+									<a asp-controller="Product" asp-action="Display" asp-route-id="@item.Id" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04" style="box-shadow:3px 3px 3px #aaa">
+											Quick View
+										</a>
+									</div>
+									<div class="block2-txt flex-w flex-t p-t-14">
+										<div class="block2-txt-child1 flex-col-l ">
+										<a asp-controller="Product" asp-action="Display" asp-route-id="@item.Id" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">@item.Name</a>
+											<span class="stext-105 cl3">@item.Price.ToString("c")</span>
+										</div>
+										<div class="block2-txt-child2 flex-r p-t-3">
+										<form asp-action="AddToWishlist" asp-controller="Wishlist" method="post">
+											<input type="hidden" name="productId" value="@item.Id" />
+											<button type="submit">
+												<img class="icon-heart1 dis-block trans-04" src="/images/images/icons/icon-heart-01.png" alt="ICON">
+@* 												<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images/images/icons/icon-heart-02.png" alt="ICON">
+ *@											</button>
+										</form>
+										</div>
+									</div>
+								</a>
+							</box>
+						}
+				</div>
+			</table>
+
+
+
+    <div class="container">
+        @if (pager.TotalPages > 0)
+        {
+            <ul class="pagination justify-content-center">
+                @if (pager.Currentpage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="1">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@(pager.Currentpage - 1)">Previous</a>
+                    </li>
+                }
+
+                @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                {
+                    <li class="page-item @(pge == pager.Currentpage ? "active" : "")">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                    </li>
+                }
+
+                @if (pager.Currentpage < pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@(pager.Currentpage + 1)">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
+                    </li>
+                }
+
+            </ul>
+        }
+
+    </div>
+</body>
+<style>
+	.section-slide {
+
+		overflow: hidden;
+	}
+
+	.wrap-slick1 {
+
+		margin: 0 auto;
+	}
+
+	.slick1 {
+		display: flex;
+		overflow: hidden;
+	}
+
+	.item-slick1 {
+		background-size: cover;
+		background-position: center;
+
+		min-height: 60vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.container {
+
+		z-index: 2;
+	}
+
+	.flex-col-c-b {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.stext-101 {
+		font-size: 14px;
+		text-transform: uppercase;
+	}
+
+	.cl0 {
+		color: #fff;
+	}
+
+	.size-101 {
+		padding: 10px 20px;
+	}
+
+	.bg1 {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	.bor1 {
+		border: 1px solid #fff;
+	}
+
+	.hov-btn1:hover {
+		background-color: #000;
+		color: #fff;
+	}
+
+	.p-lr-15 {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.trans-04 {
+		transition: all 0.4s;
+	}
+
+</style>

@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["title"] = "partial_sanpham";
+    Layout = "~/areas/admin/views/shared/_layoutadmin.cshtml";
+}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>product name</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.product.Id</td>
+                    <td>@item.product.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

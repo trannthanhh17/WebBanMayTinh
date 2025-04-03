@@ -1,0 +1,104 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5 shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h1 class="h3 mb-0">Đăng Nhập</h1>
+                </div>
+                <div class="card-body">
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Email" class="form-label">Email</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check mb-3">
+                            <input asp-for="Input.RememberMe" class="form-check-input" />
+                            <label asp-for="Input.RememberMe" class="form-check-label">Ghi nhớ đăng nhập</label>
+                        </div>
+                        <div class="form-group">
+                            <button id="login-submit" type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                        </div>
+                        <div class="d-flex justify-content-between pt-3">
+                            <a id="forgot-password" asp-page="./ForgotPassword">Quên mật khẩu?</a>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Đăng ký tài khoản mới</a>
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Xác nhận email</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-3 shadow-lg border-0">
+                <div class="card-body text-center">
+                    <p class="mb-2">Hoặc</p>
+                    <h3 class="h5">Sử dụng dịch vụ khác để đăng nhập</h3>
+                    <hr />
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <p>
+                                Không có dịch vụ xác thực bên ngoài nào được cấu hình. Xem <a href="https://go.microsoft.com/fwlink/?LinkID=532715">bài viết này</a> để biết cách thiết lập ứng dụng ASP.NET này hỗ trợ đăng nhập qua các dịch vụ bên ngoài.
+                            </p>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <div class="btn-group-vertical w-100">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        <button type="submit" class="btn btn-outline-primary my-1" name="provider" value="@provider.Name" title="Đăng nhập bằng tài khoản @provider.DisplayName">@provider.DisplayName</button>
+                                    }
+                                </div>
+                            </form>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<style>
+    .divider-text {
+        position: relative;
+        text-align: center;
+        margin: 15px 0;
+        color: #6c757d;
+    }
+
+        .divider-text::before {
+            content: " ";
+            position: absolute;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            top: 50%;
+            left: 0;
+            z-index: 1;
+        }
+
+        .divider-text::after {
+            content: "hoặc";
+            position: relative;
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 0 10px;
+            color: #6c757d;
+            z-index: 2;
+        }
+</style>

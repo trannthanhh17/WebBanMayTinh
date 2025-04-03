@@ -1,0 +1,111 @@
+﻿@model IEnumerable<WebBanHang.Models.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.Currentpage;
+    }
+}
+@await Component.InvokeAsync("Navbar")
+@await Component.InvokeAsync("NavbarBrand")
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">
+                <form class="form-inline justify-content-center" asp-action="Search" asp-controller="Product">
+                    <div class="input-group">
+                        <input name="searchString" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <select name="priceRange" class="form-control ml-2">
+                            <option value="">Select Price Range</option>
+                            <option value="0-10000000">0-10,000,000</option>
+                            <option value="10000000-20000000">10,000,000-20,000,000</option>
+                            <option value="20000000-50000000">20,000,000-50,000,000</option>
+                            <option value="50000000-100000000">50,000,000-100,000,000</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-dark" data-mdb-ripple-init>
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <table class="table">
+            <div class="row pd-3">
+                @foreach (var item in Model)
+                {
+                    <box class="box-shadow btn-outline-light center rounded" style="width: 16.5rem;padding: 15px; margin: 10px; box-shadow:5px 5px 5px #eee">
+                        <a class="col-lg-3 col-md-6" asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id">
+
+                            <div class="block2-pic hov-img0">
+                                <img src="@item.ImageUrl" />
+                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                    Quick View
+                                </a>
+                            </div>
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l ">
+                                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">@item.Name</a>
+                                    <span class="stext-105 cl3">@item.Price.ToString("c")</span>
+                                </div>
+                                <div class="block2-txt-child2 flex-r p-t-3">
+                                    <form asp-action="AddToWishlist" asp-controller="Wishlist" method="post">
+                                        <input type="hidden" name="productId" value="@item.Id" />
+                                        <button type="submit">
+                                            <img class="icon-heart1 dis-block trans-04" src="/images/images/icons/icon-heart-01.png" alt="ICON">
+                                            @* 												<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images/images/icons/icon-heart-02.png" alt="ICON">
+                                        *@
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </a>
+                    </box>
+                }
+            </div>
+        </table>
+    </tbody>
+</table>
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-center">
+            @if (pager.Currentpage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-pg="@(pager.Currentpage - 1)">Previous</a>
+                </li>
+            }
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == pager.Currentpage ? "active" : "")">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+
+            @if (pager.Currentpage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-pg="@(pager.Currentpage + 1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+            }
+
+        </ul>
+    }
+
+</div>

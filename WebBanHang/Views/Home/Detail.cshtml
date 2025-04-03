@@ -1,0 +1,42 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Component.InvokeAsync("Navbar")
+@await Component.InvokeAsync("NavbarBrand")
+<form method="post">
+                   
+        <div class=" container">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+                <div class="row">
+                    <div class="col-5">
+                        <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 500px;" />
+                    </div>
+                    <div class="col-6">
+                        <h1 class="text-dark-50">@Model.Name</h1>
+                        <h5 >Chi tiết sản phẩm</h5>
+                       
+                        <h6 class="text-muted">@Model.Description</h6>
+                    <div class="col-12 col-md-6 pb-1">
+                        <h5 class="text-danger h2 pb-2">Giá:@Model.Price.ToString("c")</h5>
+                        <div class="row">
+                            <div class="col-3 transition form-outline-success" style="width: 100px">
+                                <input min="1" type="number" name="quantity" id="quantity" class="form-control" value="1" />
+                            </div>
+                            <button type="submit" value="Add To Cart" class="col-7 transition btn btn-outline-success" style="height:38px;"
+                             asp-route-productId="@Model.Id" asp-controller="ShoppingCart" asp-action="AddToCart">
+                            <i class="bi bi-basket "></i>
+                             Thêm vào giỏ hàng
+                            </button>
+                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+           }
+        </div> 
+   </form>
+

@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "EmptyCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid  mt-100">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body cart">
+                    <div class="col-sm-12 empty-cart-cls text-center">
+                        <img src="https://mer.vn/public/theme/imgs/shop/empty-cart.svg" width="300" height="300" class="img-fluid mb-4 mr-3">
+                        <h3><strong>Giỏ Hàng của bạn đang trống</strong></h3>
+                        <h4>Hãy chọn thêm sản phẩm để mua sắm nhé !!!</h4>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Tiếp tục mua sắm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

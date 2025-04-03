@@ -1,0 +1,27 @@
+﻿@model int
+@{
+    ViewData["Title"] = "OrderCompleted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid  mt-100">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body cart">
+                    <div class="col-sm-12 text-center">
+                        <img src="https://thuockedon24h.vn/images/upload/images/delivery.png" width="300" height="300" class="img-fluid mb-4 mr-3">
+                        <h1><strong>Đặt hàng thành công</strong></h1>
+                        <h4>Chúng tôi đã nhận được thông tin mua hàng !!</h4>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Tiếp tục mua sắm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.Currentpage;
+    }
+}
+
+<h1>Order list</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User Name</th>
+            <th>Phone Number</th>
+            <th>Price</th>
+            <th>Order Date</th>
+            <th>Shipping Address</th>
+            <th>Note</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Order in Model)
+        {
+            <tr>
+                <td>@Order.Id</td>
+                <td>@Order.Name</td>
+                <td>@Order.PhoneNumber</td>
+                <td>@Order.TotalPrice.ToString("c")</td>
+                <td>@Order.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@Order.ShippingAddress</td>
+                <td>@Order.Notes</td>
+                <td>@Order.Status</td>
+                <td>
+                    <a href="/Admin/Order/Details/@Order.Id" class="btn btn-primary">Xem</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-center">
+            @if (pager.Currentpage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Order" asp-action="Index" asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Order" asp-action="Index" asp-route-pg="@(pager.Currentpage - 1)">Previous</a>
+                </li>
+            }
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == pager.Currentpage ? "active" : "")">
+                    <a class="page-link" asp-controller="Order" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+
+            @if (pager.Currentpage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Order" asp-action="Index" asp-route-pg="@(pager.Currentpage + 1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Order" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+            }
+
+        </ul>
+    }
+
+</div>

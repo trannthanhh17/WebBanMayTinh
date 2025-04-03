@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Category>
+<nav class="bg-white border-bottom">
+    <div class="  content-end">
+            @foreach (var item in Model)
+                      {
+
+                <td class="flex-w flex-l-m filter-tope-group m-tb-10" role="group" aria-label="Basic example">
+                <a asp-controller="Home" asp-action="GetProductByCate" asp-route-Id="@item.Id" data-testid="RouterSwitcherLink" style="font-size:20px" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5">@item.Name</a>
+                </td>
+           
+                      }
+    </div>
+</nav>
+

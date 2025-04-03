@@ -1,0 +1,77 @@
+﻿@model ShoppingCart
+@{
+    ViewData["Title"] = "Index";
+    CartItem cartItem = new CartItem();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@await Component.InvokeAsync("Navbar")
+@await Component.InvokeAsync("NavbarBrand")
+<div class="px-4 px-lg-0">
+    <div class="pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5" style="border-radius:20px">
+                    <!-- Shopping cart table -->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    
+                                    <th scope="col" class="border-0 bg-light">Sản phẩm
+                                        <div class="py-2 text-uppercase"></div>
+                                    </th>
+                                    <th scope="col" class="border-0 bg-light">
+                                        <div class="p-2 px-3 text-uppercase">Tên sản phẩm</div>
+                                    </th>
+                                    <th scope="col" class="border-0 bg-light">
+                                        <div class="py-2 text-uppercase">Số lượng</div>
+                                    </th>
+                                    <th scope="col" class="border-0 bg-light">
+                                        <div class="py-2 text-uppercase">Giá</div>
+                                    </th>
+                                    <th scope="col" class="border-0 bg-light">
+                                        <div class="py-2 text-uppercase">   </div>
+                                    </th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                       <td><img src="@item.Product.ImageUrl" style="max-width: 100px;" /></td>
+                                        <td class="border-0 align-middle"><strong> <a asp-controller="Product" asp-action="Display" asp-route-id="@item.ProductId">@item.Name</a></strong></td>
+                                                                 
+                                        <td class="border-0 align-middle align-content-center">
+                                            <div class="input-group" style="width: 100px;">                                             
+                                                <div class="input-group-btn">
+                                                    <a asp-action="MinusCart" asp-controller="ShoppingCart" asp-route-productId="@item.Product.Id"><i class="bi bi-dash-square-dotted " style="font-size:30px"></i> </a>
+                                                </div>
+                                                <input type="text" class="form-control form-control-sm  text-center rounded-3"  value="@item.Quantity">
+                                                <div class="input-group-btn">
+                                                    <a asp-action="PlusCart" asp-controller="ShoppingCart" asp-route-productId="@item.Product.Id"><i class="bi bi-plus-square-dotted " style="font-size:30px"></i></a>
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="border-0 align-middle"><strong>@((item.Quantity * item.Product.Price).ToString("c"))</strong></td>
+                                        <td class="border-0 align-middle"><a asp-action="RemoveItem" asp-route-id="@item.ProductId"><i class="btn bi bi-trash3-fill"></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End -->
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="list-unstyled mb-4">
+                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng hóa đơn</strong><strong>@Model.Items.Sum(x => x.Price* x.Quantity).ToString("c")</strong></li>
+                </ul><a asp-action="Checkout" class="btn btn-primary rounded-pill py-2 btn-block" >Đặt hàng</a> Hoặc
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary rounded-pill py-2 btn-block" data-abc="true">Tiếp tục mua sắm</a>
+            </div>
+        </div>
+    </div>
+</div>

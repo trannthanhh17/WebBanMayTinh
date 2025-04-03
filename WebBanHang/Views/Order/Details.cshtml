@@ -1,0 +1,117 @@
+﻿@model WebBanHang.Models.Order
+
+<h1 class="mb-4">Chi tiết đơn hàng</h1>
+
+<div class="card">
+    <div class="card-header">
+        Chi tiết sản phẩm
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <tr>
+                        <td><img src="@item.Product.ImageUrl" alt="Hình ảnh" style="max-width: 120px; max-height: 120px;" /></td>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Price.ToString("c")</td>
+                        <td>@item.Quantity</td>
+                        <td>@((item.Quantity * item.Product.Price).ToString("c"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        Thông tin đơn hàng
+    </div>
+    <div class="card-body">
+        <p><strong>Id:</strong> @Model.Id</p>
+        <p><strong>Ngày đặt hàng:</strong> @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+        <p><strong>Địa chỉ:</strong>@Model.ShippingAddress</p>
+        <p><strong>Trạng thái:</strong> @Model.Status</p>
+        <p><strong>Tổng giá:</strong> @Model.TotalPrice.ToString("c")</p>
+    </div>
+</div>
+
+<a class="btn btn-secondary" href="@Url.Action("OrderHistory", "User")">Trở lại Lịch sử đơn hàng</a>
+<style>
+    h1, h2, h5 {
+        color: #333;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .card {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .card-header {
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .card-body {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+</style>
